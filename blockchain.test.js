@@ -18,5 +18,3 @@ describe("Blockchain", () => {
     expect(bc.chain[bc.chain.length - 1]).toEqual(data);
   });
 });
-
-//
