@@ -1,5 +1,4 @@
 const Block = require("./block");
-
 class Blockchain {
   constructor() {
     this.chain = [Block.genesis()];
@@ -21,13 +20,23 @@ class Blockchain {
       const lastBlock = chain[i - 1];
 
       if (
-        block.lasthash !== lastBlock.hash ||
+        block.lastHash !== lastBlock.hash ||
         block.hash !== Block.blockHash(block)
       ) {
         return false;
       }
     }
     return true;
+  }
+
+  replaceChain(newChain) {
+    if (newChain.length <= this.chain.length) {
+      console.log("Received chain is not longer than the current chain.");
+      return;
+    }
+
+    console.log("The received chain is not valid.");
+    this.chain = newChain;
   }
 }
 
