@@ -10,7 +10,7 @@ describe("Transaction", () => {
     transaction = Transaction.newTransaction(wallet, recipient, amount);
   });
 
-  it("ouputs the `amount` subtracted from the wallet balance", () => {
+  it("outputs the `amount` subtracted from the wallet balance", () => {
     expect(
       transaction.outputs.find((output) => output.address === wallet.publicKey)
         .amount
@@ -25,6 +25,15 @@ describe("Transaction", () => {
 
   it("inputs the balance of the wallet", () => {
     expect(transaction.input.amount).toEqual(wallet.balance);
+  });
+
+  it("inputs the balance of the wallet", () => {
+    expect(Transaction.verifyTransaction(transaction)).toBe(true);
+  });
+
+  it("invalidates a corrupt transaction", () => {
+    transaction.outputs[0].amount = 50000;
+    expect(Transaction.verifyTransaction(transaction)).toBe(false);
   });
 
   describe("transacting with an amount that exceeds the balance", () => {
